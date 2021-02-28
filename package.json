@@ -8,7 +8,7 @@
     "normalize.css": "^8.0.1"
   },
   "scripts": {
-    "start": "yarn build:dev",
+    "dev": "yarn build:dev",
     "build:dev": "webpack-dev-server --env dev --mode none",
     "build:prod": "webpack --env prod --mode production"
   },
