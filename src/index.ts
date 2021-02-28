@@ -1,10 +1,12 @@
-const canvas = document.getElementById("plane");
+import "./styles/style.scss";
+
+const canvas = document.getElementById("plane") as HTMLCanvasElement;
 const width = 500;
 const height = 500;
 const step = 25;
 canvas.width = width;
 canvas.height = height;
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 const scale = window.devicePixelRatio;
 
@@ -15,10 +17,10 @@ const scale = window.devicePixelRatio;
   canvas.style.height = size + "px";
   canvas.width = size * scale;
   canvas.height = size * scale;
-  canvas.getContext("2d").scale(scale, scale);
+  ctx.scale(scale, scale);
 })();
 
-function drawLines(longitude, step, axis) {
+function drawLines(longitude: number, step: number, axis: string) {
   for (let i = 0; i < longitude / step; i++) {
     ctx.beginPath();
     if (axis === "x") {
@@ -32,13 +34,17 @@ function drawLines(longitude, step, axis) {
   }
 }
 
-function drawText(longitude, step, axis) {
+function drawText(longitude: number, step: number, axis: string) {
   for (let i = 0; i < longitude / step; i++) {
     if (axis === "x") {
-      ctx.fillText(i - longitude / 2 / step, i * step, longitude / 2 + 10);
+      ctx.fillText(
+        String(i - longitude / 2 / step),
+        i * step,
+        longitude / 2 + 10
+      );
     } else if (axis === "y") {
       ctx.fillText(
-        -1 * (i - longitude / 2 / step),
+        String(-1 * (i - longitude / 2 / step)),
         longitude / 2 - 12,
         i * step
       );
@@ -87,10 +93,7 @@ drawCoords();
 // @ts-check
 
 class Vector {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
+  constructor(private x: number, private y: number) {}
 
   draw() {
     // start at (0, 0)
@@ -141,7 +144,7 @@ class Vector {
     return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
-  multiply(n) {
+  multiply(n: number) {
     this.x *= n;
     this.y *= n;
   }
@@ -153,20 +156,20 @@ class Vector {
     this.y *= magnitude;
   }
 
-  static add(vector1, vector2) {
+  static add(vector1: Vector, vector2: Vector) {
     return new Vector(vector1.x + vector2.x, vector1.y + vector2.y);
   }
 
-  static sub(vector1, vector2) {
+  static sub(vector1: Vector, vector2: Vector) {
     return new Vector(vector1.x - vector2.x, vector1.y - vector2.y);
   }
 
-  static distance(vector1, vector2) {
+  static distance(vector1: Vector, vector2: Vector) {
     const diffVector = Vector.sub(vector1, vector2);
     return diffVector.magnitude();
   }
 
-  static dotProduct(vector1, vector2) {
+  static dotProduct(vector1: Vector, vector2: Vector) {
     return vector1.x * vector2.x + vector1.y * vector2.y;
   }
 }
