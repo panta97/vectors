@@ -17,6 +17,8 @@ class VectorCanvas {
   private vectors: Vector[] = [];
   constructor(opts: CoordOpts) {
     this.canvas = document.getElementById(opts.canvasId) as HTMLCanvasElement;
+    this.canvas.width = opts.width;
+    this.canvas.height = opts.height;
     this.width = opts.width;
     this.height = opts.height;
     this.step = opts.step;
@@ -89,6 +91,11 @@ class VectorCanvas {
   }
 
   crds() {
+    const coords = this.lastVector().getCoords();
+    return [coords.x, coords.y];
+  }
+
+  crdsDesc() {
     console.log("Coords: ", this.lastVector().getCoords());
     return this;
   }
@@ -100,7 +107,7 @@ class VectorCanvas {
 
   // sharp canvas
   private fixBlur() {
-    const size = 500;
+    const size = this.width;
     const scale = window.devicePixelRatio;
     this.canvas.style.width = size + "px";
     this.canvas.style.height = size + "px";
