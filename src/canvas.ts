@@ -90,6 +90,11 @@ class VectorCanvas {
     return this;
   }
 
+  rot(angle: number) {
+    this.lastVector().rotate(angle);
+    return this;
+  }
+
   crds() {
     const coords = this.lastVector().getCoords();
     return [coords.x, coords.y];

@@ -53,6 +53,13 @@ class Vector {
     this.yo! += y;
   }
 
+  rotate(angle: number) {
+    const tempX = this.x * Math.cos(angle) - this.y * Math.sin(angle);
+    const tempY = this.x * Math.sin(angle) + this.y * Math.cos(angle);
+    this.x = tempX;
+    this.y = tempY;
+  }
+
   getCoords() {
     return {
       x: this.x,
